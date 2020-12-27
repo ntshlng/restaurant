@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Restaurants</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+        function goBack() { window.history.back();}
+        </script>
+        <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Details of <%= restaurant.name %></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="well">
+            <div class="row">
+                <% if (restaurant.photo) { %>
+                    <img src="data:image/<%= restaurant.photo.mimetype %>;base64, <%= restaurant.photo.data %>"><br>
+                <% } %>
+            </div>
+            <div class="row">
+                    <p>Borough:  <% if (typeof (restaurant.borough) !== "undefined") { %><%= restaurant.borough %><% } %></p><br>
+                    <p>Cuisine:  <% if (typeof (restaurant.cuisine) !== "undefined") { %><%= restaurant.cuisine %><% } %></p><br>
+                    <p>Street:  <% if (typeof (restaurant.address.street) !== "undefined") { %><%= restaurant.address.street %><% } %></p><br>
+                    <p>Building:  <% if (typeof (restaurant.address.building) !== "undefined") { %><%= restaurant.address.building %><% } %></p><br>
+                    <p>Zipcode:  <% if (typeof (restaurant.address.zipcode) !== "undefined") { %><%= restaurant.address.zipcode %><% } %></p><br>
+                    <p>GPS:  <% if (typeof (restaurant.address.coord) !== "undefined") { %>[<%= restaurant.address.coord %>]<% } %></p><br>
+
+                    <p>Rating:</p>
+                    <% if (restaurant.grades) { %>
+                    <ol>
+                    <% for (var i = 0; i < restaurant.grades.length; i++) { %>
+                        <li><%= restaurant.grades[i].score %> (<%= restaurant.grades[i].user %>)</li>
+                    <% } %>
+                    </ol>
+                    <% } %>
+    
+                <p>Owner: <%= restaurant.owner %></p><br>
+                
+                <% if (restaurant.address.coord) { %>
+                    <a href="/map?lat=<%= restaurant.address.coord[0] %>&lon=<%= restaurant.address.coord[1] %>" class="btn btn-info" role="button">Map</a>
+                <% } %>
+            </div>
+            </div>
+            <div class="row ml-md-auto">
+                <a href="/rate?_id=<%= restaurant._id %>" class="btn btn-primary" role="button">Rate</a>
+
+                <a href="/edit?_id=<%= restaurant._id %>" class="btn btn-primary" role="button">Edit</a>
+                <a href="/delete?_id=<%= restaurant._id %>&owner=<%= restaurant.owner %>" class="btn btn-primary" role="button">Delete</a>
+                
+                <button class="btn btn-primary" onclick="goBack()">Back</button>
+            </div>
+            <br>
+            
+            <p>This is the end of the page ;)</p>
+        </div>
+    </body>
+</html>

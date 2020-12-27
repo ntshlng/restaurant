@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Restaurants</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Create new restaurant</h1>
+        </div>
+        <div class="container-fluid text-left">
+            <form action="/create" method="POST" enctype="multipart/form-data">
+                <!--the enctype attribute is required for a file upload control form-->
+                <!--the attribute is not encoding characters-->
+                <label for="name">Name*:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name"><br>
+                
+                <label for="borough">Borough:</label>
+                <input type="text" id="borough" name="borough" class="form-control" placeholder="Borough"><br>
+                
+                <label for="cuisine">Cuisine:</label>
+                <input type="text" id="cuisine" name="cuisine" class="form-control" placeholder="Cuisine"><br>
+                
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" class="form-control" placeholder="Street"><br>
+                
+                <label for="building">Building:</label>
+                <input type="text" id="building" name="building" class="form-control" placeholder="Building"><br>
+                
+                <label for="zipcode">Zipcode:</label>
+                <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="Zipcode"><br>
+
+                <label for="latitude">GPS Latitude:</label>
+                <input type="text" id="latitude" name="latitude" class="form-control" placeholder="Latitude"><br>
+                
+                <label for="longitude">GPS Longitude:</label>
+                <input type="text" id="longitude" name="longitude" class="form-control" placeholder="Longitude"><br>
+
+                <div class="custom-file">
+                    <label class="custom-file-label" for="photo">Photo:</label>
+                    <input type="file" id="photo" name="photo"" class="form-control custom-file-input" placeholder="Please upload JPEG/PNG format"><br>
+                </div>
+
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </body>
+    <script>
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+        });
+    </script>
+</html>

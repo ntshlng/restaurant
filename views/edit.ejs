@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Restaurants</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+            function goBack() { window.history.back();}
+            </script>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Update restaurant : <%= restaurant.name %> </h1>
+            <p ></p>Owner: <%= restaurant.owner %></p><br>
+        </div>
+        <div class="container-fluid text-left">
+            <form action="/update" method="POST" enctype="multipart/form-data">
+                <!--the enctype attribute is required for a file upload control form-->
+                <!--the attribute is not encoding characters-->
+                <label for="name">Name*:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name" value= <% if (restaurant.name) { %><%= restaurant.name %><% } %>> <br>
+                <label for="borough">Borough:</label>
+                <input type="text" id="borough" name="borough" class="form-control" placeholder="Borough" value = <% if (restaurant.borough) { %><%= restaurant.borough %><% } %>><br>
+                
+                <label for="cuisine">Cuisine:</label>
+                <input type="text" id="cuisine" name="cuisine" class="form-control" placeholder="Cuisine" value =<% if (restaurant.cuisine) { %><%= restaurant.cuisine %><% } %>><br>
+                
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" class="form-control" placeholder="Street" value =<% if (restaurant.address.street) { %><%= restaurant.address.street %><% } %>> <br>
+                
+                <label for="building">Building:</label>
+                <input type="text" id="building" name="building" class="form-control" placeholder="Building" value =  <% if (restaurant.address.building) { %><%= restaurant.address.building %><% } %>><br>
+                
+                <label for="zipcode">Zipcode:</label>
+                <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="Zipcode"  value = <% if (restaurant.address.zipcode) { %><%= restaurant.address.zipcode %><% } %>><br>
+
+                <label for="latitude">GPS Latitude:</label>
+                <input type="text" id="latitude" name="latitude" class="form-control" placeholder="Latitude"  value =<% if (restaurant.address.coord) { %><%= restaurant.address.coord[0] %><% } %>><br>
+
+                <label for="longitude">GPS Longitude:</label>
+                <input type="text" id="longitude" name="longitude" class="form-control" placeholder="Longitude"  value =<% if (restaurant.address.coord) { %><%= restaurant.address.coord[1] %><% } %>><br>
+                
+                <div class="custom-file">
+                    <label class="custom-file-label" for="photo">Update New Photo:</label>
+                    <div class="row" >
+                        <% if (restaurant.photo) { %>
+                            <img src="data:image/<%= restaurant.photo.mimetype %>;base64, <%= restaurant.photo.data %>" alt="<%= restaurant.photo.title %>" class="img-thumbnail"><br>
+                        <% } %>
+                    </div>
+                    <input type="file" id="photo" name="photo" class="form-control custom-file-input" placeholder="Photo"><br>
+                </div>
+                <input type="hidden" name="_id" value=<%= restaurant._id %>>
+                <input type="hidden" name="owner" value=<%= restaurant.owner %>>
+                <input type="submit" value="update">
+            </form>
+        </div>
+    </body>
+    <script>
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+</html>
